@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incremental Game</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/hint.min.css">
+    <script src="js/tether.min.js"></script>
+    <script src="js/jquery-3.2.0.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/chance.min.js"></script>
+    <script src="js/game.js"></script>
+
+
+</head>
+<body>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-6 col-lg-2 sidepanel">
+            <h5>XianXia Incremental
+                <small class="text-muted">v0.2.0</small>
+            </h5>
+        </div>
+
+        <div class="col-sm-9 col-md-6 col-lg-8 navpanel">
+            <div class="tabnavigation">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#cultivation" role="tab">Cultivation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#exploration" role="tab">Exploration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#travel" role="tab">Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#equipment" role="tab">Equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#alchemy" role="tab">Alchemy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#adventure" role="tab">Adventure Guild</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#merchant" role="tab">Merchant League</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#factions" role="tab">Factions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#rebirth" role="tab">Rebirth</a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-md-6 col-lg-2 sidepanel">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 col-md-6 col-lg-2 sidepanel">
+            <div class="stats">
+                <h2>Character:</h2>
+                Name: <span class="playername"></span><br>
+                Cultivation: <span class="playercultivation"></span>|<span class="playercultivationmax"></span><br>
+                <span class="playerrealm"></span><br>
+            </div>
+        </div>
+
+        <div class="col-sm-9 col-md-6 col-lg-8 gamepanel">
+
+            <div class="tab-content">
+
+                <div class="tab-pane active" id="cultivation" role="tabpanel">
+                    <h2>Cultivation Overview:</h2>
+                    You are currently cultivating with the <span class="playertechnique hint--bottom"></span> at the
+                    <span class="playerplace hint--bottom"></span>.<br>
+                    You possess <span class="playerbloodline hint--bottom" id="playerbloodline"></span> and <span
+                        class="playerbody hint--bottom"></span>.
+                    <br><br>
+                    <button class="cultivatebtn btn hint--bottom"> Start Cultivating</button>
+                    <button class="showcultivationtechniques btn"> Show Cultivation Techniques</button>
+                    <button class="showcultivationitems btn"> Show Cultivation Items</button>
+                    <button class="breakthrough btn hint--bottom"> Breakthrough</button>
+                    <br><br>
+                    <table class="table cultivationtechniques">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Technique</th>
+                            <th>Insight</th>
+                            <th>Insight Level</th>
+                            <th>Use</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Mortal Cultivation Technique</td>
+                            <td><span class="technique0"></span></td>
+                            <td>Level <span class="technique0lvl"></span></td>
+                            <td>
+                                <button class="technique0btn btn hint--bottom"> Use</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>Yes</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>Yes</td>
+                            <td>Use</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table cultivationitems">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Item</th>
+                            <th>Amount</th>
+                            <th>Use</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>1</td>
+                            <td>Use</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>1</td>
+                            <td>Use</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>1</td>
+                            <td>Use</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane" id="exploration" role="tabpanel">
+                    <h2>Exploration Overview:</h2>
+                    Explore ruins and battlefields to find powerful cultivation techniques, ancient artifacts or
+                    insights to the great dao but beware
+                    of the dangers such as monsters, bandits or like-minded adventures that compete for
+                    treasures.<br><br>
+                    <button class="explorebtn btn hint--bottom"> Start Exploring</button>
+                    <button class="showlocations btn"> Show Locations</button>
+                    <button class="showkeyitems btn"> Show Keyitems</button>
+                    <button class="fightbtn btn btnhighlight hint--bottom"> Fight</button>
+                    <button class="fleebtn btn btnhighlight hint--bottom"> Flee</button>
+                    <div class="encounter">Your Health <span class="playerhealth"></span> Enemy Health <span
+                            class="encountnerhealth"></span>
+
+                    </div>
+                    <div class="encounterwin">You have killed MOB you gain CULTIVATION and ITEM</div>
+                    <table class="table keyitems">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Item</th>
+                            <th>Amount</th>
+                            <th>Use</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>1</td>
+                            <td>Use</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>1</td>
+                            <td>Use</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Placeholder</td>
+                            <td>1</td>
+                            <td>Use</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="container-fluid">
+                        <!-- add extra container element for Masonry -->
+                        <div class="grid locations">
+                            <div class="grid-item">
+                                <img src="img/songyungforest200x200.jpg" alt="songyunforest"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Songyun Forest</button>
+
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/songyungruins200x200.jpg" alt="songyunruins"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Songyun Ruins</button>
+                            </div>
+
+                            <div class="grid-item">
+                                <img src="img/grandwakemountains200x200.jpg" alt="grandwakemountains"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Grandwake Mountains</button>
+                            </div>
+
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="tab-pane" id="travel" role="tabpanel">
+                    <div class="container-fluid">
+                        <h2>Travel Overview:</h2>
+                        You are currently at <br>
+                        <div class="grid">
+
+                            <div class="grid-item">
+                                <img src="img/songyungvillage200x200.jpg" alt="village"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Songyun Village</button>
+
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+                            <div class="grid-item">
+                                <img src="img/placeholder-200x200.jpg" alt="placeholder"
+                                     style="width:200px;height:200px;">
+                                <button class="button"> Placeholder</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="equipment" role="tabpanel">
+                    <h2>Equipment Overview:</h2>
+                    You can change and craft equipment here.
+                </div>
+                <div class="tab-pane" id="alchemy" role="tabpanel">
+                    <h2>Alchemy Overview:</h2>
+                    You can craft potions and pills here. You can also enhance or change your bloodline here.
+                </div>
+                <div class="tab-pane" id="adventure" role="tabpanel">
+                    <h2>Adventure Guild:</h2>
+                    The Adventure Guild assigns quests for contributionpoints that can be traded in for rewards.
+                </div>
+                <div class="tab-pane" id="merchant" role="tabpanel">
+                    <h2>Merchant League:</h2>
+                    Buys and Sells items. Stock market like
+                </div>
+                <div class="tab-pane" id="factions" role="tabpanel">
+                    <h2>Factions:</h2>
+                    Join a faction (Sect or School), go to war, etc
+                </div>
+                <div class="tab-pane" id="rebirth" role="tabpanel">
+                    <h2>Rebirth:</h2>
+                    Rebirth Karma Dao
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-md-6 col-lg-2 sidepanel">
+            <div class="stats">
+                <h2>Log:</h2>
+                <div class="span12" id="TerminalDOM"
+                     style="border: 1px solid grey; height: 200px; overflow:auto;"></div>
+                <button onClick="cleanDOM()" class="btn log">Clear Log</button>
+                <h2>Events:</h2>
+                Upcoming Events
+
+                <h2>Links:</h2>
+                <button class="btn savebtn"> Save Game</button>
+                <button class="btn loadbtn"> Load Game</button>
+                <br><br>
+                <a class="btn" href="changelog.html" target="_blank"> Changelog </a>
+                <a class="btn" href="credits.html" target="_blank"> Credits </a> <br><br>
+                <a class="btn" href="contribute.html" target="_blank"> Contribute </a>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

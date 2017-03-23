@@ -1,0 +1,30 @@
+Wuxia themed incremental
+
+- Cultivation
+- Body enhancement
+- Bloodline enhancement
+- Adventure guild
+- Joining Sects and clans
+- fighting sects and clans
+- tournaments
+- Aging
+- Exploring
+- Deaths?
+- Stats
+- Gear
+- Alchemy
+- Breakthrough chances
+- Prestige = Rebirth + soul weapon
+
+     <td class="span1"><div id="ResultTextAreaLimited">--</div></td>
+                </tr>
+                <tr>
+                    <td>DOM</td>
+                    <td><button onClick="cleanDOM()" class="btn">Clean</button></td>
+                    <td><div id="ResultDOMClean">--</div></td>
+                    <td><button onClick="runDOM()" class="btn btn-primary">Run</button></td>
+                    <td><div id="ResultDOM">--</div></td>
+                    <td><button onClick="runDOMLimited()" class="btn btn-success">Run Limited</button></td>
+                    <td><div id="ResultDOMLimited">--</div></td>
+                </tr>
+                <tr>
