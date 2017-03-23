@@ -528,7 +528,7 @@ function explore() {
 }
 
 //Battle Function
-function battle() {
+async function battle() {
     switch (_explorationplaces[player.exploreplace].encountertier) {
         case 1:
             encountermob.id = chance.integer({min: 0, max: 0});
