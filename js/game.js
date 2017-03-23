@@ -528,7 +528,6 @@ function explore() {
 }
 
 //Battle Function
-
 function battle() {
     switch (_explorationplaces[player.exploreplace].encountertier) {
         case 1:
@@ -552,22 +551,19 @@ function battle() {
         encountermob.health -= player.attack - encountermob.defence;
         addlog = encountermob.name + " took " + (player.attack - encountermob.defence) + " damage!";
         appendDOM(addlog);
-        await;
-        sleep(1000);
+        await sleep(1000);
 
         if (encountermob.attack - player.defence > 0) {
             player.health -= encountermob.attack - player.defence;
             addlog = player.name + " took " + (encountermob.attack - player.defence) + " damage!";
             appendDOM(addlog);
-            await;
-            sleep(1000);
+            await sleep(1000);
 
         }
         else {
             addlog = "Your defences are superior, you took no damage!";
             appendDOM(addlog);
-            await;
-            sleep(1000);
+            await sleep(1000);
 
         }
         if (player.health <= 0) {
