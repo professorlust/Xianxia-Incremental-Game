@@ -1,10 +1,10 @@
 /*** Created by KH on 19/03/2017.*/
 
 // Check if Jquery is loaded
-if (typeof jQuery === 'undefined') {
-    console.log('jQuery hasn\'t loaded');
+if (typeof jQuery === "undefined") {
+    console.log("jQuery hasn\"t loaded");
 } else {
-    console.log('jQuery has loaded');
+    console.log("jQuery has loaded");
 }
 
 // Variables
@@ -313,7 +313,7 @@ $(document).ready(function () {
     $(".breakthrough").hide();
     $(".fightbtn").hide();
     $(".fleebtn").hide();
-    console.log('ready!');
+    console.log("ready!");
 
 });
 
@@ -324,38 +324,38 @@ $(function () {
     $(".showcultivationitems").on("click", function () {
         $(".cultivationitems").toggle();
         if ($(".showcultivationitems").text() === "Hide Cultivation Items") {
-            $(".showcultivationitems").text('Show Cultivation Items');
+            $(".showcultivationitems").text("Show Cultivation Items");
         }
         else {
-            $(".showcultivationitems").text('Hide Cultivation Items');
+            $(".showcultivationitems").text("Hide Cultivation Items");
         }
     });
     $(".showcultivationtechniques").on("click", function () {
         $(".cultivationtechniques").toggle();
         if ($(".showcultivationtechniques").text() === "Hide Cultivation Techniques") {
-            $(".showcultivationtechniques").text('Show Cultivation Techniques');
+            $(".showcultivationtechniques").text("Show Cultivation Techniques");
         }
         else {
-            $(".showcultivationtechniques").text('Hide Cultivation Techniques');
+            $(".showcultivationtechniques").text("Hide Cultivation Techniques");
         }
 
     });
     $(".showkeyitems").on("click", function () {
         $(".keyitems").toggle();
         if ($(".showkeyitems").text() === "Hide Keyitems") {
-            $(".showkeyitems").text('Show Keyitems');
+            $(".showkeyitems").text("Show Keyitems");
         }
         else {
-            $(".showkeyitems").text('Hide Keyitems');
+            $(".showkeyitems").text("Hide Keyitems");
         }
     });
     $(".showlocations").on("click", function () {
         $(".locations").toggle();
         if ($(".showlocations").text() === "Hide Locations") {
-            $(".showlocations").text('Show Locations');
+            $(".showlocations").text("Show Locations");
         }
         else {
-            $(".showlocations").text('Hide Locations');
+            $(".showlocations").text("Hide Locations");
         }
     });
     $(".breakthrough").on("click", function () {
@@ -433,30 +433,30 @@ $(function () {
 
 //Function to update and Bind stats to HTML
 function updateStats() {
-    $('.playername').html(player.name);
-    $('.playerhealth').html(player.health);
-    $('.encountnerhealth').html(encountermob.health);
-    $('.playercultivation').html(player.cultivation);
-    $('.playercultivationmax').html(player.cultivationmax);
-    $('.playerrealm').html(_cycles[player.cycle].description + _realms[player.realm].name);
-    $('.technique0').html(_cultivationtechniques[0].insight + "|" + _cultivationtechniques[0].insightmax);
-    $('.technique0lvl').html(_cultivationtechniques[0].level);
-    $('.technique0btn').attr('aria-label', "A Technique that can be learned by anyone");
-    $('.cultivatebtn').attr('aria-label', player.cultivationrate + " per second");
-    $('.explorebtn').attr('aria-label', "Explore " + _explorationplaces[player.exploreplace].name);
-    $('.playerbloodline')
+    $(".playername").html(player.name);
+    $(".playerhealth").html(player.health);
+    $(".encountnerhealth").html(encountermob.health);
+    $(".playercultivation").html(player.cultivation);
+    $(".playercultivationmax").html(player.cultivationmax);
+    $(".playerrealm").html(_cycles[player.cycle].description + _realms[player.realm].name);
+    $(".technique0").html(_cultivationtechniques[0].insight + "|" + _cultivationtechniques[0].insightmax);
+    $(".technique0lvl").html(_cultivationtechniques[0].level);
+    $(".technique0btn").attr("aria-label", "A Technique that can be learned by anyone");
+    $(".cultivatebtn").attr("aria-label", player.cultivationrate + " per second");
+    $(".explorebtn").attr("aria-label", "Explore " + _explorationplaces[player.exploreplace].name);
+    $(".playerbloodline")
         .html(_bloodlines[player.bloodline].name)
-        .attr('aria-label', _bloodlines[player.bloodline].description);
-    $('.playerplace')
+        .attr("aria-label", _bloodlines[player.bloodline].description);
+    $(".playerplace")
         .html(_cultivationplaces[player.cultivateplace].name)
-        .attr('aria-label', _cultivationplaces[player.cultivateplace].description);
-    $('.playerbody')
+        .attr("aria-label", _cultivationplaces[player.cultivateplace].description);
+    $(".playerbody")
         .html(_bodies[player.body].name)
-        .attr('aria-label', _bodies[player.body].description);
-    $('.playertechnique')
+        .attr("aria-label", _bodies[player.body].description);
+    $(".playertechnique")
         .html(_cultivationtechniques[player.technique].name)
-        .attr('aria-label', _cultivationtechniques[player.technique].description);
-    $('.breakthrough').attr('aria-label', _realms[player.realm].breakthroughchance + "% Chance to Breakthrough");
+        .attr("aria-label", _cultivationtechniques[player.technique].description);
+    $(".breakthrough").attr("aria-label", _realms[player.realm].breakthroughchance + "% Chance to Breakthrough");
 }
 
 //Get Cultivation Max Function
@@ -590,12 +590,12 @@ function getLoot() {
 // Game Loop
 window.setInterval(function () {
     if (player.name === "Stranger") {
-        player.name = chance.pickone(['Shao ', 'Xiao ', 'Zhen ', 'Cheng ', 'Tao ', 'Xue ', 'Yan ', 'Yuan ', 'Cai ', 'Zhao ', 'Ming ']);
-        player.name = player.name + chance.pickone(['Shi', 'Ling', 'Tang', 'Chen', 'Hua', 'Feng', 'Meng', 'Huang', 'Xue', 'Mu', 'Ming', 'Bai']);
+        player.name = chance.pickone(["Shao ", "Xiao ", "Zhen ", "Cheng ", "Tao ", "Xue ", "Yan ", "Yuan ", "Cai ", "Zhao ", "Ming "]);
+        player.name = player.name + chance.pickone(["Shi", "Ling", "Tang", "Chen", "Hua", "Feng", "Meng", "Huang", "Xue", "Mu", "Ming", "Bai"]);
     }
     getCultivationmax();
     if (player.cultivation >= player.cultivationmax) {
-        $('.breakthrough').show();
+        $(".breakthrough").show();
         iscultivating = 0;
         player.cultivation = player.cultivationmax;
 
@@ -603,18 +603,18 @@ window.setInterval(function () {
     }
     if (iscultivating === 1) {
         cultivate();
-        $(".cultivatebtn").text('Stop Cultivating');
+        $(".cultivatebtn").text("Stop Cultivating");
     }
     else {
-        $(".cultivatebtn").text('Start Cultivating');
+        $(".cultivatebtn").text("Start Cultivating");
     }
     if (isexploring === 1) {
         explore();
-        $(".explorebtn").text('Stop Exploring');
+        $(".explorebtn").text("Stop Exploring");
 
     }
     else {
-        $(".explorebtn").text('Start Exploring');
+        $(".explorebtn").text("Start Exploring");
     }
 
     updateStats();
@@ -626,15 +626,14 @@ window.setInterval(function () {
 //Random things
 
 // Sleep
-function sleep(ms) {
-    return new Promise(resolve = > setTimeout(resolve, ms);
-)
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 //ScrollToBottom for the Log
 function scrollToBottom() {
     //noinspection JSJQueryEfficiency,JSJQueryEfficiency
-    $('#TerminalDOM').scrollTop($('#TerminalDOM')[0].scrollHeight);
+    $("#TerminalDOM").scrollTop($("#TerminalDOM")[0].scrollHeight);
 }
 
 //Saving and Loading
@@ -642,36 +641,36 @@ function saveGame() {
     localStorage.setItem("save", JSON.stringify(player));
 }
 function loadGame() {
-    $.extend(true, player, JSON.parse(localStorage.getItem('save')));
+    $.extend(true, player, JSON.parse(localStorage.getItem("save")));
 }
 
 //Tab function
-$('#myTab a').click(function (e) {
+$("#myTab a").click(function (e) {
     e.preventDefault();
-    $(this).tab('show')
+    $(this).tab("show")
 });
 
 //Function to clean log
 function cleanDOM() {
     var begin = new Date().getTime();
-    var terminal = $('#TerminalDOM')[0];
+    var terminal = $("#TerminalDOM")[0];
     while (terminal.firstChild) {
         terminal.removeChild(terminal.firstChild);
     }
     var end = new Date().getTime();
 
     //noinspection JSJQueryEfficiency
-    $('#ResultDOMClean').empty();
+    $("#ResultDOMClean").empty();
     //noinspection JSJQueryEfficiency
-    $('#ResultDOMClean').append((end - begin) + 'ms');
+    $("#ResultDOMClean").append((end - begin) + "ms");
 }
 
 //Function to add log
 function appendDOM(addlog) {
-    var terminal = $('#TerminalDOM')[0];
+    var terminal = $("#TerminalDOM")[0];
 
     terminal.appendChild(document.createTextNode(addlog));
-    terminal.appendChild(document.createElement('br'));
+    terminal.appendChild(document.createElement("br"));
     scrollToBottom()
 }
 
@@ -680,8 +679,8 @@ function appendDOM(addlog) {
     $.fn.toggleDisabled = function () {
         return this.each(function () {
             var $this = $(this);
-            if ($this.attr('disabled')) $this.removeAttr('disabled');
-            else $this.attr('disabled', 'disabled');
+            if ($this.attr("disabled")) $this.removeAttr("disabled");
+            else $this.attr("disabled", "disabled");
         });
     };
 })(jQuery);
