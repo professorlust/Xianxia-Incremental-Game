@@ -528,7 +528,6 @@ function explore() {
 }
 
 //Battle Function
-async;
 function battle() {
     switch (_explorationplaces[player.exploreplace].encountertier) {
         case 1:
