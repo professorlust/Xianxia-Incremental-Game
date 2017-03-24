@@ -244,12 +244,12 @@ _cultivationtechniques = [
         insightmax: 100
     },
     {
-        name: "Dragonfire Cultivation Technique",
+        name: "Saint Cultivation Technique",
         description: "An ordinary cultivation Technique",
-        cultivationbonus: 100,
+        cultivationbonus: 10,
         level: 1,
         insight: 0,
-        insightmax: 1000
+        insightmax: 100
     }
 ];
 
@@ -477,7 +477,7 @@ function cultivate() {
     player.cultivation += player.cultivationrate;
     addlog = "Cultivation increased by " + player.cultivationrate;
     appendDOM(addlog);
-    if (chance.bool({likelihood: player.luck / 100}) === true) {
+    if (chance.bool({likelihood: player.luck / 25}) === true) {
         gainInsight();
 
     }
