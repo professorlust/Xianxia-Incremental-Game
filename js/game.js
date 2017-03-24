@@ -1,5 +1,6 @@
 /*** Created by KH on 19/03/2017.*/
 
+
 // Check if Jquery is loaded
 if (typeof jQuery === "undefined") {
     console.log("jQuery hasn\"t loaded");
@@ -648,12 +649,12 @@ $("#myTab a").click(function (e) {
 
 //Function to clean log
 function cleanDOM() {
-    var begin = new Date().getTime();
-    var terminal = $("#TerminalDOM")[0];
+    let begin = new Date().getTime();
+    let terminal = $("#TerminalDOM")[0];
     while (terminal.firstChild) {
         terminal.removeChild(terminal.firstChild);
     }
-    var end = new Date().getTime();
+    let end = new Date().getTime();
 
     //noinspection JSJQueryEfficiency
     $("#ResultDOMClean").empty();
@@ -663,7 +664,7 @@ function cleanDOM() {
 
 //Function to add log
 function appendDOM(addlog) {
-    var terminal = $("#TerminalDOM")[0];
+    let terminal = $("#TerminalDOM")[0];
 
     terminal.appendChild(document.createTextNode(addlog));
     terminal.appendChild(document.createElement("br"));
@@ -674,7 +675,7 @@ function appendDOM(addlog) {
 (function ($) {
     $.fn.toggleDisabled = function () {
         return this.each(function () {
-            var $this = $(this);
+            let $this = $(this);
             if ($this.attr("disabled")) $this.removeAttr("disabled");
             else $this.attr("disabled", "disabled");
         });
