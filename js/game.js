@@ -9,7 +9,7 @@ if (typeof jQuery === "undefined") {
 }
 
 // Variables
-var addlog,
+let addlog,
     iscultivating = 0,
     isexploring = 0,
     bkfailmin = 0,
@@ -17,7 +17,7 @@ var addlog,
     bkloss = 0,
     isdead = 0;
 
-var player =
+let player =
     {
         name: "Stranger",
         bloodline: 0,
@@ -56,7 +56,7 @@ var player =
 
     };
 
-var encountermob = {
+let encountermob = {
     name: "Default",
     id: 0,
     attack: 0,
@@ -266,7 +266,7 @@ _battlemonsters = [
         healthhigh: 100
     }
 ];
-
+/*
 function resetGame() {
     var player =
         {
@@ -306,6 +306,7 @@ function resetGame() {
             gameloaded: 0
         };
 }
+*/
 
 //On document ready
 $(document).ready(function () {
@@ -324,6 +325,7 @@ $(function () {
 
     $(".showcultivationitems").on("click", function () {
         $(".cultivationitems").toggle();
+        //noinspection JSJQueryEfficiency
         if ($(".showcultivationitems").text() === "Hide Cultivation Items") {
             $(".showcultivationitems").text("Show Cultivation Items");
         }
@@ -333,6 +335,7 @@ $(function () {
     });
     $(".showcultivationtechniques").on("click", function () {
         $(".cultivationtechniques").toggle();
+        //noinspection JSJQueryEfficiency
         if ($(".showcultivationtechniques").text() === "Hide Cultivation Techniques") {
             $(".showcultivationtechniques").text("Show Cultivation Techniques");
         }
@@ -343,6 +346,7 @@ $(function () {
     });
     $(".showkeyitems").on("click", function () {
         $(".keyitems").toggle();
+        //noinspection JSJQueryEfficiency
         if ($(".showkeyitems").text() === "Hide Keyitems") {
             $(".showkeyitems").text("Show Keyitems");
         }
@@ -352,6 +356,7 @@ $(function () {
     });
     $(".showlocations").on("click", function () {
         $(".locations").toggle();
+        //noinspection JSJQueryEfficiency
         if ($(".showlocations").text() === "Hide Locations") {
             $(".showlocations").text("Show Locations");
         }
@@ -427,6 +432,7 @@ $(function () {
         appendDOM(addlog);
         $(".fightbtn").toggle();
         $(".fleebtn").toggle();
+        //noinspection JSIgnoredPromiseFromCall
         battle();
     });
 
@@ -642,6 +648,7 @@ function loadGame() {
 }
 
 //Tab function
+//noinspection JSJQueryEfficiency
 $("#myTab a").click(function (e) {
     e.preventDefault();
     $(this).tab("show")
