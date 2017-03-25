@@ -32,7 +32,7 @@ let player =
         luck: 1,
         luckhelper: 1,
         health: 100,
-        maxhealth: 100,
+        healthmax: 100,
         regen: 1,
         attack: 30,
         defence: 10,
@@ -257,14 +257,54 @@ _cultivationtechniques = [
 _battlemonsters = [
     {
         name: "Wolf",
-        description: "Description",
+        description: "A wild carnivorous mammal which is the largest member of the dog family, living and hunting in packs.",
         attacklow: 3,
         attackhigh: 8,
         defencelow: 1,
         defencehigh: 5,
         healthlow: 50,
         healthhigh: 100
-    }
+    },
+    {
+        name: "Bear",
+        description: "Bears are carnivoran mammals of the family Ursida.",
+        attacklow: 5,
+        attackhigh: 20,
+        defencelow: 5,
+        defencehigh: 15,
+        healthlow: 80,
+        healthhigh: 150
+    },
+    {
+        name: "Goblin",
+        description: "Goblins are short, ugly humanoids that stand just over 3 feet tall.",
+        attacklow: 5,
+        attackhigh: 10,
+        defencelow: 1,
+        defencehigh: 10,
+        healthlow: 50,
+        healthhigh: 100
+    },
+    {
+        name: "Wolf",
+        description: "A wild carnivorous mammal which is the largest member of the dog family, living and hunting in packs.",
+        attacklow: 3,
+        attackhigh: 8,
+        defencelow: 1,
+        defencehigh: 5,
+        healthlow: 50,
+        healthhigh: 100
+    },
+    {
+        name: "Rat",
+        description: "A giant rat the size of a dog.",
+        attacklow: 1,
+        attackhigh: 5,
+        defencelow: 1,
+        defencehigh: 5,
+        healthlow: 50,
+        healthhigh: 100
+    },
 ];
 /*
 function resetGame() {
@@ -442,6 +482,7 @@ $(function () {
 function updateStats() {
     $(".playername").html(player.name);
     $(".playerhealth").html(player.health);
+    $(".playerhealthmax").html(player.healthmax);
     $(".encountnerhealth").html(encountermob.health);
     $(".playercultivation").html(player.cultivation);
     $(".playercultivationmax").html(player.cultivationmax);
@@ -521,7 +562,7 @@ function explore() {
     }
 
     if (chance.bool({likelihood: _explorationplaces[player.exploreplace].treasurerate * player.luck}) === true) {
-        getLoot();
+        getTreasure();
         player.luckhelper = 1;
         isexploring = 0;
         addlog = "Loot";
@@ -538,7 +579,7 @@ function explore() {
 async function battle() {
     switch (_explorationplaces[player.exploreplace].encountertier) {
         case 1:
-            encountermob.id = chance.integer({min: 0, max: 0});
+            encountermob.id = chance.integer({min: 0, max: 4});
 
     }
     encountermob.name = _battlemonsters[encountermob.id].name;
@@ -575,6 +616,7 @@ async function battle() {
         }
         if (player.health <= 0) {
             addlog = "You died!";
+            appendDOM(addlog);
             isdead = 1;
             break;
         }
@@ -585,9 +627,21 @@ async function battle() {
     $(".explorebtn").toggleDisabled();
 }
 
-//Get loot Function
-function getLoot() {
+//Get treasure Function
+function getTreasure() {
+    switch (_explorationplaces[player.exploreplace].treasuretier) {
+        case 1:
+            if (player.knowstechnique1 === 0){
+                if (chance.bool({likelihood: _explorationplaces[player.exploreplace].treasurerate * player.luck}) === true){
+                    player.knowstechnique1 === 1;
+                }
+            }
+            else{
 
+            }
+
+
+    }
 }
 
 // Game Loop
