@@ -220,7 +220,7 @@ _cultivationplaces = [
     {
         name: "Songyan Village",
         description: "Home Village",
-        cultivationbonus: 0
+        cultivationbonus: 1
     }
 ];
 
@@ -239,7 +239,7 @@ _cultivationtechniques = [
     {
         name: "Mortal Cultivation Technique",
         description: "An ordinary cultivation Technique",
-        cultivationbonus: 0,
+        cultivationbonus: 1,
         level: 1,
         insight: 0,
         insightmax: 100
@@ -487,7 +487,7 @@ function updateStats() {
     $(".playercultivation").html(player.cultivation);
     $(".playercultivationmax").html(player.cultivationmax);
     $(".playerrealm").html(_cycles[player.cycle].description + _realms[player.realm].name);
-    $(".technique0").html(_cultivationtechniques[0].insight + "|" + _cultivationtechniques[0].insightmax);
+    $(".technique0").html(_cultivationtechniques[0].insight + "|" + (_cultivationtechniques[0].insightmax *_cultivationtechniques[0].level) );
     $(".technique0lvl").html(_cultivationtechniques[0].level);
     $(".technique0btn").attr("aria-label", "A Technique that can be learned by anyone");
     $(".cultivatebtn").attr("aria-label", player.cultivationrate + " per second");
@@ -516,7 +516,7 @@ function getCultivationmax() {
 
 //Get Cultivationrate Function
 function getCultivationrate() {
-    player.cultivationrate = (player.cultivationbase + _cultivationplaces[player.cultivateplace].cultivationbonus + (_cultivationtechniques[player.technique].cultivationbonus * _cultivationtechniques[player.technique].level)) * _bloodlines[player.bloodline].cultivationbonus * _bodies[player.body].cultivationbonus;
+    player.cultivationrate = player.cultivationbase + _cultivationplaces[player.cultivateplace].cultivationbonus + (_cultivationtechniques[player.technique].cultivationbonus + _cultivationtechniques[player.technique].level) + (_bloodlines[player.bloodline].cultivationbonus * _bodies[player.body].cultivationbonus);
 }
 
 //Cultivation Function
@@ -529,7 +529,7 @@ function cultivate() {
         gainInsight();
 
     }
-    if (player.health < player.maxhealth) {
+    if (player.health < player.healthmax) {
         player.health += player.regen;
         addlog = "Health increased by " + player.regen;
     }
@@ -538,17 +538,13 @@ function cultivate() {
 //Insight Function
 function gainInsight() {
     _cultivationtechniques[player.technique].insight += chance.integer({min: 1, max: 20});
-    if (_cultivationtechniques[player.technique].insight >= _cultivationtechniques[player.technique].level * _cultivationtechniques[player.technique].insightmax) {
-        _cultivationtechniques[player.technique].insight = 0;
-        _cultivationtechniques[player.technique].level++;
-        addlog = "You have gained some Insight on your cultivation technique!";
-        appendDOM(addlog);
-    }
+    addlog = "You have gained some Insight on your cultivation technique!";
+    appendDOM(addlog);
 }
 
 //Explore Function
 function explore() {
-    if (chance.bool({likelihood: player.luck / 100}) === true) {
+    if (chance.bool({likelihood: player.luck / 25}) === true) {
         gainInsight();
     }
     if (chance.bool({likelihood: _explorationplaces[player.exploreplace].encounterchance * player.luck * player.luckhelper}) === true) {
@@ -650,12 +646,15 @@ window.setInterval(function () {
         player.name = chance.pickone(["Shao ", "Xiao ", "Zhen ", "Cheng ", "Tao ", "Xue ", "Yan ", "Yuan ", "Cai ", "Zhao ", "Ming "]);
         player.name = player.name + chance.pickone(["Shi", "Ling", "Tang", "Chen", "Hua", "Feng", "Meng", "Huang", "Xue", "Mu", "Ming", "Bai"]);
     }
+    if (_cultivationtechniques[player.technique].insight >= _cultivationtechniques[player.technique].level * _cultivationtechniques[player.technique].insightmax) {
+        _cultivationtechniques[player.technique].insight = 0;
+        _cultivationtechniques[player.technique].level++;
+    }
     getCultivationmax();
     if (player.cultivation >= player.cultivationmax) {
         $(".breakthrough").show();
         iscultivating = 0;
         player.cultivation = player.cultivationmax;
-
 
     }
     if (iscultivating === 1) {
@@ -695,11 +694,14 @@ function scrollToBottom() {
 
 //Saving and Loading
 function saveGame() {
-    localStorage.setItem("save", JSON.stringify(player));
+    localStorage.setItem("player", JSON.stringify(player));
+    localStorage.setItem("technique", JSON.stringify(_cultivationtechniques));
 }
 function loadGame() {
-    $.extend(true, player, JSON.parse(localStorage.getItem("save")));
+    $.extend(true, player, JSON.parse(localStorage.getItem("player")));
+    $.extend(true, _cultivationtechniques, JSON.parse(localStorage.getItem("technique")));
 }
+
 
 //Tab function
 //noinspection JSJQueryEfficiency
