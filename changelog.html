@@ -3,57 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Changelogs</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/other.css">
+    <script type="text/javascript">
+        function injectScript(url) {
+            var scriptElement = document.createElement('script');
+            scriptElement.setAttribute('type', 'text/javascript');
+            scriptElement.setAttribute('src', url);
+            document.getElementsByTagName('head')[0].appendChild(scriptElement);
+        }
+        function handleResponse(response) {
+            //console.log(response);
+            var text = '',
+                item;
+            for (var i = 0, k = response.query.results.feed.entry.length; i < k; i++) {
+                item = response.query.results.feed.entry[i];
+                text += '<li class="list-group-item"><a href="' + item.link.href + '">' + item.title + '</a><br>' + item.content.content + '</li>';
+            }
+            document.getElementById('main-content').innerHTML = text;
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            // https://developer.yahoo.com/yql/console/
+            // select * from feednormalizer where url='http://news.ycombinator.com/rss' and output='atom_1.0'
+            injectScript("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'https%3A%2F%2Fgithub.com%2FchKaze%2FXianxia-Incremental-Game%2Fcommits%2Fmaster.atom'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=handleResponse");
+        }, false );
+    </script>
+
+
 </head>
 <body>
-<h1>2017/03/22 - Changelog v0.1.1</h1>
-Ive posted the prototype on reddit and made some small adjustements to the game. I have removed the saving for now
-so that I can implement a server side saving which enables me to do things like events with other players and
-comparisons.
-<ul>
-    <li>Removed Saving for now (See above for reason)</li>
-    <li>Changed name to XianXia</li>
-    <li>Added random name generator</li>
-    <li>Fixed most Buttons</li>
-    <li>Changed Design to make it look less washed out(thanks /u/Fatul!</li>
-    <li>Added Cultivation Insight (Improves your Cultivationtechnique bonus the more you gain insight on the
-        technique)
-    </li>
-    <li>Luck Stat is now relevant</li>
-    <li>On that note, started implementing characterstats (currently hidden)</li>
-</ul>
+<ul id="main-content" class="list-group"><li>Loading...</li></ul>
 
-<h2>2017/03/22 - To-Do</h2>
-Plans for v0.2 release
-<ul>
-    <li>Exploration actually does something</li>
-    <li>Battles + Treasures</li>
-    <li>Saving Done</li>
-    <li>Early Equipment prototype</li>
-</ul>
 
-<h1>2017/03/21 - Changelog v0.1</h1>
-This is the first kinda playable version that I have released just for testing and feedback purposes.
-There is still a lot of work to do and I have some ideas where this game is heading. Think of it as an idlegame with
-a Wuxia story that is interactive.
-<ul>
-    <li>Finished the layout of the game</li>
-    <li>Added Cultivation</li>
-    <li>Added Exploration (mostly placeholders)</li>
-    <li>Added Traveling (mostly placeholders)</li>
-    <li>Working Log</li>
-    <li>Saving</li>
-</ul>
 
-<h2>2017/03/21 - To-Do</h2>
 
-<ul>
-    <li>Equipment + Crafting</li>
-    <li>Alchemy + Bloodline enhancement</li>
-    <li>Adventure Guild + Merchant League</li>
-    <li>Factions</li>
-    <li>Time and Age function</li>
-    <li>Rebirth</li>
-</ul>
 </body>
 </html>
