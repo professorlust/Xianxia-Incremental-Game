@@ -15,6 +15,7 @@ let addlog,
     bkfailmin = 0,
     bkfailmax = 0,
     bkloss = 0,
+    karma = 0,
     isdead = 0;
 
 let player =
@@ -59,9 +60,14 @@ let player =
 let encountermob = {
     name: "Default",
     id: 0,
+    blood: 0,
     attack: 0,
     defence: 0,
     health: 0
+};
+let treasure = {
+    currency: 0,
+    spiritstone: 0
 };
 
 //Arrays
@@ -170,7 +176,7 @@ _cycles = [
     },
     {
         name: "Third Cycle",
-        description: "The First Cycle of the ",
+        description: "The Third Cycle of the ",
         cultivationmax: 3
     },
     {
@@ -307,7 +313,7 @@ _currencies = [
         description: "A tael worth 100 Orichalcum",
         amount: 0
     }
-]
+];
 
 _spiritstones = [
     {
@@ -335,16 +341,41 @@ _spiritstones = [
         description: "A low grade Spiritstone",
         amount: 0
     }
-]
+];
 
 _treasures = [
     {
         name: "Small pouch",
         description: "A small pouch filled with currency",
-
+        currencieslow: 10,
+        currencieshigh: 1000,
+        spiritstoneslow: 0,
+        spiritstoneshigh: 0,
+        special: 0
     }
-]
-
+];
+_blood = [
+    {
+        name: "Mixed Blood",
+        description: "Blood of mixed races",
+        amount: 0
+    },
+    {
+        name: "Wolf's Blood",
+        description: "Blood of the ferocious Wolf",
+        amount: 0
+    },
+    {
+        name: "Bear's Blood",
+        description: "Blood of the mighty Bear",
+        amount: 0
+    },
+    {
+        name: "Fox's Blood",
+        description: "Blood of the crafty Fox",
+        amount: 0
+    }
+];
 _battlemonsters = [
     {
         name: "Wolf",
@@ -402,6 +433,7 @@ _battlemonsters = [
         blood: 0
     },
 ];
+
 /*
 function resetGame() {
     let player =
@@ -580,7 +612,17 @@ function updateStats() {
     $(".playerhealth").html(player.health);
     $(".playerhealthmax").html(player.healthmax);
     $(".encountnerhealth").html(encountermob.health);
-    $(".playercultivation").html(player.cultivation);
+    $(".tgs").html(_spiritstones[0].amount);
+    $(".tgsuse").attr("aria-label", "Adds 10 to Cultivation");
+    $(".lgs").html(_spiritstones[1].amount);
+    $(".lgsuse").attr("aria-label", "Adds 1'000 to Cultivation");
+    $(".mgs").html(_spiritstones[2].amount);
+    $(".mgsuse").attr("aria-label", "Adds 100'000 to Cultivation");
+    $(".hgs").html(_spiritstones[3].amount);
+    $(".hgsuse").attr("aria-label", "Adds 10'000'000 to Cultivation");
+    $(".ugs").html(_spiritstones[4].amount);
+    $(".ugsuse").attr("aria-label", "Adds 1'000'000'000 to Cultivation");
+    $(".playercultivation").html(prettify(player.cultivation));
     $(".playercultivationmax").html(player.cultivationmax);
     $(".playerrealm").html(_cycles[player.cycle].description + _realms[player.realm].name);
     $(".technique0").html(_cultivationtechniques[0].insight + "|" + (_cultivationtechniques[0].insightmax *_cultivationtechniques[0].level) );
@@ -657,13 +699,11 @@ function explore() {
         getTreasure();
         player.luckhelper = 1;
         isexploring = 0;
-        addlog = "Loot";
-        appendDOM(addlog);
     }
     if (isexploring === 1) {
         addlog = "You found nothing";
         appendDOM(addlog);
-        player.luckhelper++;
+        player.luckhelper += 0.1;
     }
 }
 
@@ -675,6 +715,7 @@ async function battle() {
 
     }
     encountermob.name = _battlemonsters[encountermob.id].name;
+    encountermob.blood = _battlemonsters[encountermob.id].blood;
     encountermob.attack = chance.integer({
         min: _battlemonsters[encountermob.id].attacklow,
         max: _battlemonsters[encountermob.id].attackhigh
@@ -712,30 +753,102 @@ async function battle() {
             isdead = 1;
             break;
         }
-
-        updateStats();
+        if (encountermob.health <= 0) {
+            getLoot(encountermob.blood);
+            updateStats();
+        }
 
     }
     $(".explorebtn").toggleDisabled();
 }
 
+function getLoot(input){
+    _blood[input].amount += 1;
+    addlog = "You have extracted some " + _blood[input].name;
+    appendDOM(addlog);
+}
 //Get treasure Function
 function getTreasure() {
     switch (_explorationplaces[player.exploreplace].treasuretier) {
         case 1:
             if (player.knowstechnique1 === 0){
                 if (chance.bool({likelihood: _explorationplaces[player.exploreplace].treasurerate * player.luck}) === true){
-                    player.knowstechnique1 === 1;
+                    player.knowstechnique1 = 1;
+                    addlog = "You found the Saint Cultivation Technique!";
+                    appendDOM(addlog);
+                    break;
                 }
             }
             else{
+                treasure.id = chance.integer({min: 0, max: 0});
+                treasure.currency = chance.integer({
+                    min: _treasures[treasure.id].currencieslow,
+                    max: _treasures[treasure.id].currencieshigh
+                });
+                addlog = "You found a " + _treasures[treasure.id].name;
+                appendDOM(addlog);
+                while (treasure.currency >= 100) {
+                    if (treasure.currency >= 10000000000) {
+                        treasure.currrency = treasure.currency / 100;
+                        _currencies[4].amount++;
+                    }
+                    else if (treasure.currency >= 100000000){
+                        treasure.currrency = treasure.currency / 100;
+                        _currencies[3].amount++;
+                    }
+                    else if (treasure.currency >= 1000000){
+                        treasure.currrency = treasure.currency / 100;
+                        _currencies[2].amount++;
+                    }
+                    else if (treasure.currency >= 10000){
+                        treasure.currrency = treasure.currency / 100;
+                        _currencies[1].amount++;
+                    }
+                    else {
+                        _currencies[0].amount += treasure.currency;
+                        treasure.currency = 0;
+                    }
+                }
+                treasure.spiritstone = chance.integer({
+                    min: _treasures[treasure.id].spiritstoneslow,
+                    max: _treasures[treasure.id].spiritstoneshigh
+                });
+                while (treasure.spiritstone >= 100) {
+                    if (treasure.spiritstone >= 10000000000) {
+                        treasure.spiritstone = treasure.spiritstone / 100;
+                        _spiritstones[4].amount++;
+                    }
+                    else if (treasure.spiritstone >= 100000000){
+                        treasure.spiritstone = treasure.spiritstone / 100;
+                        _spiritstones[3].amount++;
+                    }
+                    else if (treasure.spiritstone >= 1000000){
+                        treasure.spiritstone = treasure.spiritstone / 100;
+                        _spiritstones[2].amount++;
+                    }
+                    else if (treasure.spiritstone >= 10000){
+                        treasure.spiritstone = treasure.spiritstone / 100;
+                        _spiritstones[1].amount++;
+                    }
+                    else {
+                        _spiritstones[0].amount += treasure.spiritstone;
+                        treasure.spiritstone = 0;
+                    }
+                }
+
 
             }
 
 
     }
 }
+// Early Death function
+function death() {
+    karma = player.realm * 1000 + player.cultivation;
+    addlog = "You have died! You lost all your knowledge and gained " + karma + " Karma!";
+    appendDOM(addlog);
 
+}
 // Game Loop
 window.setInterval(function () {
     if (player.name === "Stranger") {
@@ -794,12 +907,14 @@ function saveGame() {
     localStorage.setItem("technique", JSON.stringify(_cultivationtechniques));
     localStorage.setItem("currencies", JSON.stringify(_currencies));
     localStorage.setItem("spiritstones", JSON.stringify(_spiritstones));
+    localStorage.setItem("blood", JSON.stringify(_blood));
 }
 function loadGame() {
     $.extend(true, player, JSON.parse(localStorage.getItem("player")));
     $.extend(true, _cultivationtechniques, JSON.parse(localStorage.getItem("technique")));
     $.extend(true, _currencies, JSON.parse(localStorage.getItem("currencies")));
     $.extend(true, _spiritstones, JSON.parse(localStorage.getItem("spiritstones")));
+    $.extend(true, _blood, JSON.parse(localStorage.getItem("blood")));
 
 }
 function exportGame(){
@@ -850,3 +965,8 @@ function appendDOM(addlog) {
         });
     };
 })(jQuery);
+
+function prettify(input){
+    let output = Math.round(input * 1000000)/1000000;
+    return output;
+}
