@@ -239,6 +239,7 @@ _cultivationtechniques = [
     {
         name: "Mortal Cultivation Technique",
         description: "An ordinary cultivation Technique",
+        isknown: 1,
         cultivationbonus: 1,
         level: 1,
         insight: 0,
@@ -246,13 +247,103 @@ _cultivationtechniques = [
     },
     {
         name: "Saint Cultivation Technique",
-        description: "An ordinary cultivation Technique",
+        description: "A cultivation Technique useful for the early Saint Realms",
+        isknown: 0,
         cultivationbonus: 10,
         level: 1,
         insight: 0,
         insightmax: 100
     }
 ];
+
+_currencies = [
+    {
+        name: "Copper Coin",
+        description: "Coins forged out of Copper",
+        amount: 0
+    },
+    {
+        name: "Silver Coin",
+        description: "Coins forged out of Silver",
+        amount: 0
+    },
+    {
+        name: "Gold Coin",
+        description: "Coins forged out of Gold",
+        amount: 0
+    },
+    {
+        name: "Platin Coin",
+        description: "Coins forged out of Platin",
+        amount: 0
+    },
+    {
+        name: "Orichalcum Coin",
+        description: "Coins forged out of Orichalcum",
+        amount: 0
+    },
+    {
+        name: "Copper Tael",
+        description: "A tael worth 100 Copper",
+        amount: 0
+    },
+    {
+        name: "Silver Tael",
+        description: "A tael worth 100 Silver",
+        amount: 0
+    },
+    {
+        name: "Gold Tael",
+        description: "A tael worth 100 Gold",
+        amount: 0
+    },
+    {
+        name: "Platin Tael",
+        description: "A tael worth 100 Platin",
+        amount: 0
+    },
+    {
+        name: "Orichalcum Tael",
+        description: "A tael worth 100 Orichalcum",
+        amount: 0
+    }
+]
+
+_spiritstones = [
+    {
+        name: "Tainted Spiritstone",
+        description: "A tainted Spiritstone",
+        amount: 0
+    },
+    {
+        name: "Low Grade Spiritstone",
+        description: "A low grade Spiritstone",
+        amount: 0
+    },
+    {
+        name: "Mid Grade Spiritstone",
+        description: "A low grade Spiritstone",
+        amount: 0
+    },
+    {
+        name: "High Grade Spiritstone",
+        description: "A low grade Spiritstone",
+        amount: 0
+    },
+    {
+        name: "Ultra-High Grade Spiritstone",
+        description: "A low grade Spiritstone",
+        amount: 0
+    }
+]
+
+_treasures = [
+    {
+        name: "Small pouch",
+        description: "A small pouch filled with currency",
+
+    }
+]
 
 _battlemonsters = [
     {
@@ -263,7 +354,8 @@ _battlemonsters = [
         defencelow: 1,
         defencehigh: 5,
         healthlow: 50,
-        healthhigh: 100
+        healthhigh: 100,
+        blood: 1
     },
     {
         name: "Bear",
@@ -273,7 +365,8 @@ _battlemonsters = [
         defencelow: 5,
         defencehigh: 15,
         healthlow: 80,
-        healthhigh: 150
+        healthhigh: 150,
+        blood: 2
     },
     {
         name: "Goblin",
@@ -283,17 +376,19 @@ _battlemonsters = [
         defencelow: 1,
         defencehigh: 10,
         healthlow: 50,
-        healthhigh: 100
+        healthhigh: 100,
+        blood: 0
     },
     {
-        name: "Wolf",
-        description: "A wild carnivorous mammal which is the largest member of the dog family, living and hunting in packs.",
+        name: "Fox",
+        description: "A crafty mammal which is common in foresty areas.",
         attacklow: 3,
         attackhigh: 8,
         defencelow: 1,
         defencehigh: 5,
         healthlow: 50,
-        healthhigh: 100
+        healthhigh: 100,
+        blood: 3
     },
     {
         name: "Rat",
@@ -303,12 +398,13 @@ _battlemonsters = [
         defencelow: 1,
         defencehigh: 5,
         healthlow: 50,
-        healthhigh: 100
+        healthhigh: 100,
+        blood: 0
     },
 ];
 /*
 function resetGame() {
-    var player =
+    let player =
         {
             name: "Stranger",
             bloodline: 0,
@@ -516,7 +612,7 @@ function getCultivationmax() {
 
 //Get Cultivationrate Function
 function getCultivationrate() {
-    player.cultivationrate = player.cultivationbase + _cultivationplaces[player.cultivateplace].cultivationbonus + (_cultivationtechniques[player.technique].cultivationbonus + _cultivationtechniques[player.technique].level) + (_bloodlines[player.bloodline].cultivationbonus * _bodies[player.body].cultivationbonus);
+    player.cultivationrate = (player.cultivationbase + _cultivationplaces[player.cultivateplace].cultivationbonus + (_cultivationtechniques[player.technique].cultivationbonus + _cultivationtechniques[player.technique].level) + (_bloodlines[player.bloodline].cultivationbonus * _bodies[player.body].cultivationbonus))/5;
 }
 
 //Cultivation Function
@@ -696,12 +792,22 @@ function scrollToBottom() {
 function saveGame() {
     localStorage.setItem("player", JSON.stringify(player));
     localStorage.setItem("technique", JSON.stringify(_cultivationtechniques));
+    localStorage.setItem("currencies", JSON.stringify(_currencies));
+    localStorage.setItem("spiritstones", JSON.stringify(_spiritstones));
 }
 function loadGame() {
     $.extend(true, player, JSON.parse(localStorage.getItem("player")));
     $.extend(true, _cultivationtechniques, JSON.parse(localStorage.getItem("technique")));
-}
+    $.extend(true, _currencies, JSON.parse(localStorage.getItem("currencies")));
+    $.extend(true, _spiritstones, JSON.parse(localStorage.getItem("spiritstones")));
 
+}
+function exportGame(){
+
+}
+function importGame(){
+
+}
 
 //Tab function
 //noinspection JSJQueryEfficiency
