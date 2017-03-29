@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Incremental Game</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/hint.css/hint.min.css">
     <link rel="stylesheet" href="css/game.css">
-    <link rel="stylesheet" href="css/hint.min.css">
-    <script src="js/tether.min.js"></script>
-    <script src="js/jquery-3.2.0.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/chance.min.js"></script>
+    <script src="bower_components/tether/dist/js/tether.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/chance/dist/chance.min.js"></script>
+
     <script src="js/game.js"></script>
+
 
 
 </head>
@@ -88,7 +90,7 @@
                     You possess <span class="playerbloodline hint--bottom" id="playerbloodline"></span> and <span
                         class="playerbody hint--bottom"></span>.
                     <br><br>
-                    <button class="cultivatebtn btn hint--bottom"> Start Cultivating</button>
+                    <button class="cultivatebtn btn hint--bottom ladda-button" data-style="expand-right"> Start Cultivating</button>
                     <button class="showcultivationtechniques btn"> Show Cultivation Techniques</button>
                     <button class="showcultivationitems btn"> Show Cultivation Items</button>
                     <button class="breakthrough btn hint--bottom"> Breakthrough</button>
@@ -115,9 +117,12 @@
                         </tr>
                         <tr>
                             <th scope="row"></th>
-                            <td>Placeholder</td>
-                            <td>Yes</td>
-                            <td>@fat</td>
+                            <td>Saint Cultivation Technique</td>
+                            <td><span class="technique1"></span></td>
+                            <td>Level <span class="technique1lvl"></span></td>
+                            <td>
+                                <button class="technique1btn btn hint--bottom disabled"> Use</button>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row"></th>
@@ -182,8 +187,9 @@
                     <button class="showkeyitems btn"> Show Keyitems</button>
                     <button class="fightbtn btn btnhighlight hint--bottom"> Fight</button>
                     <button class="fleebtn btn btnhighlight hint--bottom"> Flee</button>
-                    <div class="encounter">Your Health <span class="playerhealth"></span> Enemy Health <span
-                            class="encountnerhealth"></span>
+                    <div class="encounter">
+                        Your Health <progress id="playerhp" min="0" max="100" name="health" value="100"></progress> <br>
+                        Enemy Health <progress id="enemyhp" min="0" max="100" name="health" value="100"></progress>
 
                     </div>
                     <div class="encounterwin">You have killed MOB you gain CULTIVATION and ITEM</div>

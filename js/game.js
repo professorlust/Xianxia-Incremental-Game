@@ -9,6 +9,8 @@ if (typeof jQuery === "undefined") {
 }
 
 // Variables
+
+
 let addlog,
     iscultivating = 0,
     isexploring = 0,
@@ -234,9 +236,9 @@ _explorationplaces = [
     {
         name: "Songyan Forest",
         description: "Forest outside your Home Village",
-        treasurerate: 10,
+        treasurerate: 25,
         treasuretier: 1,
-        encounterchance: 20,
+        encounterchance: 80,
         encountertier: 1
     }
 ];
@@ -478,8 +480,9 @@ function resetGame() {
 
 //On document ready
 $(document).ready(function () {
-    loadGame();
+
     updateStats();
+    enableStuff();
     $(".breakthrough").hide();
     $(".fightbtn").hide();
     $(".fleebtn").hide();
@@ -570,6 +573,9 @@ $(function () {
             iscultivating = 0;
         }
     });
+    $(".technique1btn").on("click", function () {
+        player.technique = 1;
+    });
 
     $(".explorebtn").on("click", function () {
         if (isexploring === 0) {
@@ -583,6 +589,8 @@ $(function () {
     });
     $(".loadbtn").on("click", function () {
         loadGame();
+
+
     });
     $(".savebtn").on("click", function () {
         saveGame();
@@ -628,6 +636,9 @@ function updateStats() {
     $(".technique0").html(_cultivationtechniques[0].insight + "|" + (_cultivationtechniques[0].insightmax *_cultivationtechniques[0].level) );
     $(".technique0lvl").html(_cultivationtechniques[0].level);
     $(".technique0btn").attr("aria-label", "A Technique that can be learned by anyone");
+    $(".technique1").html(_cultivationtechniques[1].insight + "|" + (_cultivationtechniques[1].insightmax *_cultivationtechniques[1].level) );
+    $(".technique1lvl").html(_cultivationtechniques[1].level);
+    $(".technique1btn").attr("aria-label", "A Technique Suitable for Saint Cultivators");
     $(".cultivatebtn").attr("aria-label", player.cultivationrate + " per second");
     $(".explorebtn").attr("aria-label", "Explore " + _explorationplaces[player.exploreplace].name);
     $(".playerbloodline")
@@ -645,6 +656,11 @@ function updateStats() {
     $(".breakthrough").attr("aria-label", _realms[player.realm].breakthroughchance + "% Chance to Breakthrough");
 }
 
+function enableStuff(){
+    if (_cultivationtechniques[1].isknown === 1){
+        $(".technique1btn").removeClass("disabled");
+    }
+}
 //Get Cultivation Max Function
 function getCultivationmax() {
     player.cultivationmax = _realms[player.realm].cultivationmax * _cycles[player.cycle].cultivationmax;
@@ -670,6 +686,7 @@ function cultivate() {
     if (player.health < player.healthmax) {
         player.health += player.regen;
         addlog = "Health increased by " + player.regen;
+        document.getElementById("playerhp").value= player.health / player.healthmax * 100;
     }
 }
 
@@ -685,7 +702,7 @@ function explore() {
     if (chance.bool({likelihood: player.luck / 25}) === true) {
         gainInsight();
     }
-    if (chance.bool({likelihood: _explorationplaces[player.exploreplace].encounterchance * player.luck * player.luckhelper}) === true) {
+    if (chance.bool({likelihood: _explorationplaces[player.exploreplace].encounterchance}) === true) {
         $(".fightbtn").toggle();
         $(".fleebtn").toggle();
         isexploring = 0;
@@ -695,7 +712,7 @@ function explore() {
         $(".explorebtn").toggleDisabled();
     }
 
-    if (chance.bool({likelihood: _explorationplaces[player.exploreplace].treasurerate * player.luck}) === true) {
+    if (chance.bool({likelihood: _explorationplaces[player.exploreplace].treasurerate}) === true) {
         getTreasure();
         player.luckhelper = 1;
         isexploring = 0;
@@ -703,7 +720,7 @@ function explore() {
     if (isexploring === 1) {
         addlog = "You found nothing";
         appendDOM(addlog);
-        player.luckhelper += 0.1;
+        player.luckhelper += 1;
     }
 }
 
@@ -728,15 +745,18 @@ async function battle() {
         min: _battlemonsters[encountermob.id].healthlow,
         max: _battlemonsters[encountermob.id].healthhigh
     });
+    encountermob.healthmax =  encountermob.health;
     while (encountermob.health > 0) {
         encountermob.health -= player.attack - encountermob.defence;
         addlog = encountermob.name + " took " + (player.attack - encountermob.defence) + " damage!";
+        document.getElementById("enemyhp").value= encountermob.health / encountermob.healthmax * 100;
         appendDOM(addlog);
         await sleep(1000);
 
         if (encountermob.attack - player.defence > 0) {
             player.health -= encountermob.attack - player.defence;
             addlog = player.name + " took " + (encountermob.attack - player.defence) + " damage!";
+            document.getElementById("playerhp").value= player.health / player.healthmax * 100;
             appendDOM(addlog);
             await sleep(1000);
 
@@ -771,9 +791,9 @@ function getLoot(input){
 function getTreasure() {
     switch (_explorationplaces[player.exploreplace].treasuretier) {
         case 1:
-            if (player.knowstechnique1 === 0){
-                if (chance.bool({likelihood: _explorationplaces[player.exploreplace].treasurerate * player.luck}) === true){
-                    player.knowstechnique1 = 1;
+            if (_cultivationtechniques[1].isknown === 0){
+                if (chance.bool({likelihood: _explorationplaces[player.exploreplace].treasurerate}) === true){
+                   _cultivationtechniques[1].isknown = 1;
                     addlog = "You found the Saint Cultivation Technique!";
                     appendDOM(addlog);
                     break;
@@ -849,6 +869,22 @@ function death() {
     appendDOM(addlog);
 
 }
+
+function saveGame() {
+    localStorage.setItem("player", JSON.stringify(player));
+    localStorage.setItem("technique", JSON.stringify(_cultivationtechniques));
+    localStorage.setItem("currencies", JSON.stringify(_currencies));
+    localStorage.setItem("spiritstones", JSON.stringify(_spiritstones));
+    localStorage.setItem("blood", JSON.stringify(_blood));
+}
+function loadGame() {
+    $.extend(true, player, JSON.parse(localStorage.getItem("player")));
+    $.extend(true, _cultivationtechniques, JSON.parse(localStorage.getItem("technique")));
+    $.extend(true, _currencies, JSON.parse(localStorage.getItem("currencies")));
+    $.extend(true, _spiritstones, JSON.parse(localStorage.getItem("spiritstones")));
+    $.extend(true, _blood, JSON.parse(localStorage.getItem("blood")));
+
+}
 // Game Loop
 window.setInterval(function () {
     if (player.name === "Stranger") {
@@ -869,9 +905,11 @@ window.setInterval(function () {
     if (iscultivating === 1) {
         cultivate();
         $(".cultivatebtn").text("Stop Cultivating");
+
     }
     else {
         $(".cultivatebtn").text("Start Cultivating");
+
     }
     if (isexploring === 1) {
         explore();
@@ -883,7 +921,7 @@ window.setInterval(function () {
     }
 
     updateStats();
-    saveGame();
+
 
 
 }, 1000);
@@ -902,21 +940,7 @@ function scrollToBottom() {
 }
 
 //Saving and Loading
-function saveGame() {
-    localStorage.setItem("player", JSON.stringify(player));
-    localStorage.setItem("technique", JSON.stringify(_cultivationtechniques));
-    localStorage.setItem("currencies", JSON.stringify(_currencies));
-    localStorage.setItem("spiritstones", JSON.stringify(_spiritstones));
-    localStorage.setItem("blood", JSON.stringify(_blood));
-}
-function loadGame() {
-    $.extend(true, player, JSON.parse(localStorage.getItem("player")));
-    $.extend(true, _cultivationtechniques, JSON.parse(localStorage.getItem("technique")));
-    $.extend(true, _currencies, JSON.parse(localStorage.getItem("currencies")));
-    $.extend(true, _spiritstones, JSON.parse(localStorage.getItem("spiritstones")));
-    $.extend(true, _blood, JSON.parse(localStorage.getItem("blood")));
 
-}
 function exportGame(){
 
 }
